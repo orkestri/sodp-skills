@@ -11,10 +11,11 @@ Copy the commands into your project's Claude commands directory:
 ```bash
 # From your project root
 mkdir -p .claude/commands
-curl -fsSL https://raw.githubusercontent.com/orkestri/sodp-skills/main/.claude/commands/sodp-setup.md    -o .claude/commands/sodp-setup.md
-curl -fsSL https://raw.githubusercontent.com/orkestri/sodp-skills/main/.claude/commands/sodp-watch.md    -o .claude/commands/sodp-watch.md
-curl -fsSL https://raw.githubusercontent.com/orkestri/sodp-skills/main/.claude/commands/sodp-set.md      -o .claude/commands/sodp-set.md
-curl -fsSL https://raw.githubusercontent.com/orkestri/sodp-skills/main/.claude/commands/sodp-presence.md -o .claude/commands/sodp-presence.md
+BASE=https://raw.githubusercontent.com/orkestri/sodp-skills/main/.claude/commands
+for cmd in sodp-setup sodp-watch sodp-set sodp-presence \
+           sodp-server-setup sodp-server-go sodp-server-acl sodp-server-schema; do
+  curl -fsSL "$BASE/$cmd.md" -o ".claude/commands/$cmd.md"
+done
 ```
 
 Or clone and copy:
@@ -26,19 +27,35 @@ cp /tmp/sodp-skills/.claude/commands/*.md .claude/commands/
 
 ## Commands
 
+### Client
+
 | Command | What it does |
 |---------|-------------|
 | `/sodp-setup` | Detects your language, installs the dependency, creates a configured client |
 | `/sodp-watch [key]` | Adds a watch callback for a state key |
 | `/sodp-set [key] [op]` | Adds set, patch, or set_in write code |
-| `/sodp-presence [key]` | Adds presence registration + watcher (auto-removed on disconnect) |
+| `/sodp-presence [key]` | Adds live presence registration + watcher (auto-removed on disconnect) |
+
+### Server
+
+| Command | What it does |
+|---------|-------------|
+| `/sodp-server-setup` | Gets the server running — Docker, binary, or from source (Rust or Go) |
+| `/sodp-server-go` | Embeds the Go server into an existing Go HTTP service |
+| `/sodp-server-acl` | Generates ACL rules to protect state keys per user/role |
+| `/sodp-server-schema` | Generates schema validation config for state keys |
 
 ## Supported languages
 
+### Client SDKs
 - TypeScript / JavaScript (`@sodp/client`)
 - React (`@sodp/react`)
 - Python (`sodp-client`)
 - Java (`site.orkestri:sodp-client`)
+
+### Server
+- Rust (standalone — highest throughput)
+- Go (standalone or embedded library)
 
 ## Example
 
