@@ -13,7 +13,7 @@ Copy the commands into your project's Claude commands directory:
 mkdir -p .claude/commands
 BASE=https://raw.githubusercontent.com/orkestri/sodp-skills/main/.claude/commands
 for cmd in sodp-setup sodp-watch sodp-set sodp-presence \
-           sodp-server-setup sodp-server-go sodp-server-acl sodp-server-schema; do
+           sodp-server-setup sodp-server-ts sodp-server-go sodp-server-acl sodp-server-schema; do
   curl -fsSL "$BASE/$cmd.md" -o ".claude/commands/$cmd.md"
 done
 ```
@@ -41,6 +41,7 @@ cp /tmp/sodp-skills/.claude/commands/*.md .claude/commands/
 | Command | What it does |
 |---------|-------------|
 | `/sodp-server-setup` | Gets the server running — Docker, binary, or from source (Rust or Go) |
+| `/sodp-server-ts` | Embeds the TypeScript server into an existing Node.js HTTP service |
 | `/sodp-server-go` | Embeds the Go server into an existing Go HTTP service |
 | `/sodp-server-acl` | Generates ACL rules to protect state keys per user/role |
 | `/sodp-server-schema` | Generates schema validation config for state keys |
@@ -56,6 +57,7 @@ cp /tmp/sodp-skills/.claude/commands/*.md .claude/commands/
 ### Server
 - Rust (standalone — highest throughput)
 - Go (standalone or embedded library)
+- TypeScript / Node.js (embedded library — `@sodp/server`)
 
 ## Example
 
@@ -92,5 +94,6 @@ cargo run --bin sodp-server -- 0.0.0.0:7777
 - [Protocol spec & server](https://github.com/orkestri/SODP)
 - [TypeScript client](https://www.npmjs.com/package/@sodp/client)
 - [React hooks](https://www.npmjs.com/package/@sodp/react)
+- [TypeScript server](https://www.npmjs.com/package/@sodp/server)
 - [Python client](https://pypi.org/project/sodp-client/)
 - [Java client](https://central.sonatype.com/artifact/site.orkestri/sodp-client)
